@@ -1,5 +1,5 @@
-class DifferentCurrencyError(Exception):
-    pass
+# class DifferentCurrencyError():
+#     raise ValueError(f"Error: Currencies do not match.")
 
 
 class Currency:
@@ -15,13 +15,21 @@ class Currency:
         - symbol - optional symbol used to designate currency
         - digits -- number of significant digits used
         """
-        pass
+        self.name = name
+        self.code = code
+        self.symbol = symbol
+        self.digits = digits
+        
 
     def __str__(self):
         """
         Should return the currency code, or code with symbol in parentheses.
         """
-        pass
+        if self.symbol == None:
+            return f"{self.name} is represented as {self.code}"
+        else:
+            return f"{self.name} is represented as ({self.symbol})"
+
 
     def __eq__(self, other):
         """
@@ -43,14 +51,20 @@ class Money:
         - amount -- quantity of currency
         - currency -- type of currency
         """
-        pass
+        self.amount = amount
+        self.currency = currency
+        # self.symbol = symbol
+        # self.code = code
 
     def __str__(self):
         """
         Should use the currency symbol if available, else use the code.
         Use the currency digits to determine number of digits to show.
         """
-        pass
+        if self.currency.symbol:
+            return f"{self.currency.symbol}{self.amount:.{self.currency.digits}f}" 
+        else:
+            return f"{self.currency.code} {self.amount:.{self.currency.digits}f}"
 
     def __repr__(self):
         return f"<Money {str(self)}>"
@@ -67,23 +81,31 @@ class Money:
         Add two money objects of the same currency. If they have different
         currencies, raise a DifferentCurrencyError.
         """
-        pass
+        if self.currency.code == other.currency.code:
+           return Money(self.amount + other.amount, self.currency)
+        else:
+            raise ValueError(f"Cannot add amounts because currencies aren't the same.")
+
 
     def sub(self, other):
         """
         Subtract two money objects of the same currency. If they have different
         currencies, raise a DifferentCurrencyError.
         """
-        pass
+        if self.currency.code == other.currency.code:
+            return Money(self.amount - other.amount, self.currency)
+        else:
+            DifferentCurrencyError
+            # (f"Cannot subtract amounts because currencies aren't the same.")
 
     def mul(self, multiplier):
         """
         Multiply a money object by a number to get a new money object.
         """
-        pass
+        return Money(self.amount * multiplier, self.currency)
 
     def div(self, divisor):
         """
         Divide a money object by a number to get a new money object.
         """
-        pass
+        return Money(self.amount / divisor, self.currency)
