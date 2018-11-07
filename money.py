@@ -1,5 +1,5 @@
-# class DifferentCurrencyError():
-#     raise ValueError(f"Error: Currencies do not match.")
+class DifferentCurrencyError(Exception):
+    pass
 
 
 class Currency:
@@ -84,7 +84,7 @@ class Money:
         if self.currency.code == other.currency.code:
            return Money(self.amount + other.amount, self.currency)
         else:
-            raise ValueError(f"Cannot add amounts because currencies aren't the same.")
+            raise DifferentCurrencyError
 
 
     def sub(self, other):
@@ -95,8 +95,7 @@ class Money:
         if self.currency.code == other.currency.code:
             return Money(self.amount - other.amount, self.currency)
         else:
-            DifferentCurrencyError
-            # (f"Cannot subtract amounts because currencies aren't the same.")
+            raise DifferentCurrencyError
 
     def mul(self, multiplier):
         """

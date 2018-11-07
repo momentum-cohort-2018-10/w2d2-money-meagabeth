@@ -1,6 +1,5 @@
-# import pytest
-from money import Money, Currency
-#  DifferentCurrencyError
+import pytest
+from money import Money, Currency, DifferentCurrencyError
 
 USD = Currency("United States dollar", "USD", "$")
 BHD = Currency("Bahraini dinar", "BHD", digits=3)
@@ -74,14 +73,14 @@ def test_sub_money():
     assert Money(10, USD).sub(Money(3.75, USD)) == Money(6.25, USD)
 
 
-# def test_add_different_currencies():
-#     with pytest.raises(DifferentCurrencyError):
-#         Money(1, USD).add(Money(1, BHD))
+def test_add_different_currencies():
+    with pytest.raises(DifferentCurrencyError):
+        Money(1, USD).add(Money(1, BHD))
 
 
-# def test_sub_different_currencies():
-#     with pytest.raises(DifferentCurrencyError):
-#         Money(1, USD).sub(Money(1, BHD))
+def test_sub_different_currencies():
+    with pytest.raises(DifferentCurrencyError):
+        Money(1, USD).sub(Money(1, BHD))
 
 
 def test_mul_money():
